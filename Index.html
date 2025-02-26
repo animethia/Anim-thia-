@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message à Walter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Envoyer un message à Walter</h1>
+    <textarea id="message" placeholder="Écris-moi quelque chose..."></textarea><br>
+    <button onclick="sendMessage()">Envoyer</button>
+
+    <script>
+        function sendMessage() {
+            var message = document.getElementById("message").value;
+            if (!message) {
+                alert("Le message ne peut pas être vide !");
+                return;
+            }
+
+            var webhookURL = "TON_WEBHOOK_DISCORD_ICI"; // Remplace ceci par ton Webhook Discord
+
+            var payload = {
+                content: "💬 Message de Animéthia : " + message
+            };
+
+            fetch(webhookURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Message envoyé avec succès !");
+                    document.getElementById("message").value = ""; // Réinitialisation du champ texte
+                } else {
+                    alert("Erreur lors de l'envoi du message.");
+                }
+            })
+            .catch(error => {
+                console.error("Erreur :", error);
+                alert("Impossible d'envoyer le message.");
+            });
+        }
+    </script>
+</body>
+</html>
